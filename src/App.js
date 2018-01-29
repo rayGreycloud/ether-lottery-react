@@ -7,7 +7,8 @@ class App extends Component {
   state = {
     manager: '',
     players: [],
-    balance: ''
+    balance: '',
+    value: ''
   };
   
   async componentDidMount() {
@@ -22,8 +23,7 @@ class App extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2 className="App-title">Lottery Contract</h2>  
-          
+          <h2 className="App-title">Lottery Contract</h2>        
         </div>
         <div className="content">
           <p>
@@ -32,8 +32,23 @@ class App extends Component {
           <p>
             There are currently <strong> {this.state.players.length}</strong> player(s) 
           </p>
-          <p>Prize Pool: {web3.utils.fromWei(this.state.balance, 'ether')} ether</p>           
-        </div>      
+          <p>Prize Pool: {web3.utils.fromWei(this.state.balance, 'ether')} ETH</p>           
+        </div>
+        <hr/>
+        <form action="" className="entry">
+          <h4>Want to try your luck?</h4>
+          <div className="form-group">
+            <label>Amount of ether (ETH) to enter: </label>
+            <input 
+              value={this.state.value}
+              onChange={event => this.setState({ value: event.target.value })}
+              className="form-group-item"
+            />
+            <button>Enter</button>
+          </div>
+          
+        </form>
+              
       </div>
     );
   }
