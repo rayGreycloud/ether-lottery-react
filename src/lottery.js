@@ -1,19 +1,10 @@
 import web3 from './web3';
 
 // Contract address
-const address = '0x26dCac236cC6d75921D3C6BFfbD9fa9d088CefDb';
+const address = '0xAEF9f1F0545Aa712b774c402d5c7fe3faD7f3A74';
 
 // Contract interface
 const abi = [
-  {
-    constant: true,
-    inputs: [],
-    name: 'getBalance',
-    outputs: [{ name: '', type: 'uint256' }],
-    payable: false,
-    stateMutability: 'view',
-    type: 'function'
-  },
   {
     constant: true,
     inputs: [],
@@ -54,6 +45,24 @@ const abi = [
     constant: true,
     inputs: [{ name: '', type: 'uint256' }],
     name: 'players',
+    outputs: [{ name: '', type: 'address' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'getLastWinner',
+    outputs: [{ name: '', type: 'address' }],
+    payable: false,
+    stateMutability: 'view',
+    type: 'function'
+  },
+  {
+    constant: true,
+    inputs: [],
+    name: 'lastWinner',
     outputs: [{ name: '', type: 'address' }],
     payable: false,
     stateMutability: 'view',
