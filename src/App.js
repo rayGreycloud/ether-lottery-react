@@ -8,7 +8,8 @@ class App extends Component {
     manager: '',
     players: [],
     balance: '',
-    value: ''
+    value: '',
+    message: 'For entertainment purposes only ;)'
   };
   
   async componentDidMount() {
@@ -17,6 +18,21 @@ class App extends Component {
     const balance = await web3.eth.getBalance(lottery.options.address);
     
     this.setState({ manager, players, balance });
+  }
+  
+  onSubmit = async (event) => {
+    event.preventDefault();
+    
+    const accounts = await web3.eth.getAccounts();
+    
+    this.setState({ message: 'Muhaha... er, waiting for transaction success...' });
+    
+    await lottery.methods.enter().send({
+      from: accounts[0],
+      value: web3.utils.toWei(this.state.value, 'ether')
+    });
+    
+    this.setState({ message: 'Your entry has been accepted!' });
   }
   
   render() {  
@@ -35,7 +51,7 @@ class App extends Component {
           <p>Prize Pool: {web3.utils.fromWei(this.state.balance, 'ether')} ETH</p>           
         </div>
         <hr/>
-        <form action="" className="entry">
+        <form onSubmit={this.onSubmit} className="entry">
           <h4>Want to try your luck?</h4>
           <div className="form-group">
             <label>Amount of ether (ETH) to enter: </label>
@@ -46,8 +62,9 @@ class App extends Component {
             />
             <button>Enter</button>
           </div>
-          
         </form>
+        <hr/>
+        <h2 className="message">{this.state.message}</h2>
               
       </div>
     );
