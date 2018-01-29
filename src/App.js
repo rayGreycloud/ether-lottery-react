@@ -32,7 +32,21 @@ class App extends Component {
       value: web3.utils.toWei(this.state.value, 'ether')
     });
     
-    this.setState({ message: 'Your entry has been accepted!' });
+    this.setState({ message: 'Your entry has been accepted. Good Luck!' });
+  }
+  
+  onClick = async () => {    
+    const accounts = await web3.eth.getAccounts();
+    
+    this.setState({ message: 'Picking winner... waiting for transaction success... ' });
+    
+    await lottery.methods.pickWinner().send({
+      from: accounts[0]
+    });
+    
+    const winner = await lottery.methods.getLastWinner().call();
+    
+    this.setState({ message: `Winning account: ${winner}` });    
   }
   
   render() {  
@@ -65,7 +79,13 @@ class App extends Component {
         </form>
         <hr/>
         <h2 className="message">{this.state.message}</h2>
-              
+        <hr/>
+        <div className="winner">
+          <h4>(Manager Only) Ready to pick the lucky winner?</h4>
+          <button onClick={this.onClick}>
+            Pick Winner
+          </button>
+        </div>
       </div>
     );
   }
