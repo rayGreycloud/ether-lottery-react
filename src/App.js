@@ -1,21 +1,26 @@
 import React, { Component } from 'react';
 import './App.css';
 import web3 from './web3.js';
+import lottery from './lottery';
 
 class App extends Component {
-  render() {
-    web3.eth.getAccounts()
-      .then(console.log);
+  constructor(props) {
+    super(props);
     
+    this.state = { manager: '' };
+  }
+  
+  async componentDidMount() {
+    const manager = await lottery.methods.manager().call();
+    
+    this.setState({ manager });
+  }
+  
+  render() {  
     return (
-      <div className="App">
-        <header className="App-header">
-          
-          <h1 className="App-title">Welcome to the Lottery</h1>
-        </header>
-        <p className="App-intro">
-          To get started, you must have the Metamask Chrome extension installed.
-        </p>
+      <div className="App App-header">
+        <h2 className="App-title">Lottery Contract</h2>
+        <p className="App-intro">This contract is managed by: </p><p>{this.state.manager}</p>
       </div>
     );
   }
